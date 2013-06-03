@@ -26,7 +26,7 @@ class FedexProcessShipmentRequest(FedexBaseService):
         self._config_obj = config_obj
         
         # Holds version info for the VersionId SOAP object.
-        self._version_info = {'service_id': 'ship', 'major': '7', 
+        self._version_info = {'service_id': 'ship', 'major': '7',
                              'intermediate': '0', 'minor': '0'}
         
         self.RequestedShipment = None
@@ -159,7 +159,7 @@ class FedexDeleteShipmentRequest(FedexBaseService):
         self._config_obj = config_obj
         
         # Holds version info for the VersionId SOAP object.
-        self._version_info = {'service_id': 'ship', 'major': '7', 
+        self._version_info = {'service_id': 'ship', 'major': '7',
                              'intermediate': '0', 'minor': '0'}
         self.DeletionControlType = None
         """@ivar: Holds the DeletrionControlType WSDL object."""

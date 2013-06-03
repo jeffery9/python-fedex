@@ -9,8 +9,11 @@ label data that is returned with the reply.
 """
 import logging
 import binascii
+import datetime
+
 from example_config import CONFIG_OBJ
-from fedex.services.ship_service import FedexProcessShipmentRequest
+from fedex.services.ship_service import FedexProcessShipmentRequest\
+
 
 # Set this to the INFO level to see the response from Fedex printed in stdout.
 logging.basicConfig(level=logging.INFO)
@@ -19,6 +22,9 @@ logging.basicConfig(level=logging.INFO)
 # We're using the FedexConfig object from example_config.py in this dir.
 shipment = FedexProcessShipmentRequest(CONFIG_OBJ)
 
+now = datetime.datetime.now()
+
+# shipment.RequestedShipment.ShipTimestamp = now
 # This is very generalized, top-level information.
 # REGULAR_PICKUP, REQUEST_COURIER, DROP_BOX, BUSINESS_SERVICE_CENTER or STATION
 shipment.RequestedShipment.DropoffType = 'REGULAR_PICKUP'
@@ -92,7 +98,7 @@ package1_weight.Units = "LB"
 package1 = shipment.create_wsdl_object_of_type('RequestedPackageLineItem')
 package1.Weight = package1_weight
 # Un-comment this to see the other variables you may set on a package.
-#print package1
+# print package1
 
 # This adds the RequestedPackageLineItem WSDL object to the shipment. It
 # increments the package count and total weight of the shipment for you.
@@ -100,25 +106,25 @@ shipment.add_package(package1)
 
 # If you'd like to see some documentation on the ship service WSDL, un-comment
 # this line. (Spammy).
-#print shipment.client
+# print shipment.client
 
 # Un-comment this to see your complete, ready-to-send request as it stands
 # before it is actually sent. This is useful for seeing what values you can
 # change.
-#print shipment.RequestedShipment
+print shipment.RequestedShipment
 
 # If you want to make sure that all of your entered details are valid, you
 # can call this and parse it just like you would via send_request(). If
 # shipment.response.HighestSeverity == "SUCCESS", your shipment is valid.
-#shipment.send_validation_request()
+shipment.send_validation_request()
 
 # Fires off the request, sets the 'response' attribute on the object.
-shipment.send_request()
+# shipment.send_request()
 
 # This will show the reply to your shipment being sent. You can access the
 # attributes through the response attribute on the request object. This is
 # good to un-comment to see the variables returned by the Fedex reply.
-print shipment.response
+# print shipment.response
 
 # Here is the overall end result of the query.
 print "HighestSeverity:", shipment.response.HighestSeverity
